@@ -8,6 +8,7 @@ var main = function() {
 		var loadingImgDiv = $("#loadingImgDiv");
 		var columnResultsDiv = $("#columnResultsDiv");
 		var columnResultsTable = $("#columnResultsTable");
+		var sensitiveDataFoundAlert = $("#sensitiveDataFoundAlert");
 
 		$('[data-toggle="tooltip"]').tooltip({
 		    container : 'body'
@@ -51,12 +52,12 @@ var main = function() {
 				  selectBoxAdd(column['type']) + "</td>";
 					
 			if (column['sensitive']) {
-				row = row + "<td><input type='checkbox' checked></td>";
+				row = row + "<td><input type='checkbox' checked></td>" +
+					"<td><input type='checkbox' disabled></td></tr>";
 			} else {
-				row = row + "<td><input type='checkbox'></td>";
+				row = row + "<td><input type='checkbox'></td>" +
+				"<td><input type='checkbox'></td></tr>";
 			}
-
-			row = row + "<td><input type='checkbox'></td></tr>"
 
 			return row;
 
@@ -88,8 +89,10 @@ var main = function() {
 						columnResultsTable.append(tableRowAdd(data.columns[i]));
 					}
 
-					//if I can find table row warning
-					sensitiveDataFoundAlert.show();
+					//if there are inputs checked already (because sensitive was set to true on data value)
+					if ($("input:checked").length) {
+						sensitiveDataFoundAlert.show();
+					}
 
 					//if any contain sensitive, should add warning message saying 'these columns should be removed or obfuscated'
 

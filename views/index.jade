@@ -2,18 +2,36 @@ extends layout
 
 block content
 	div.container.margin-top
-		nav.navbar.navbar-default
+		//nav.navbar.navbar-default
 			div.contailer-fluid
 				div.navbar-header
-					a.navbar-brand Where's Wally
+					a.navbar-brand De-Identify Your Data
 		div.jumbotron
-			h1 Where's Wally?
-			h3 Gov Hack 2016
-			p Put some text here to explain
+			a(href="https://2016.hackerspace.govhack.org/content/de-identify-your-data-inc")
+				img(src="/images/DYDincLogo.png", style="width:150px; height: 80px; float: right;")
+			h1 De-Identify Your Data
+			h3 Gov Hack 2016 - Hiding Wally, Commercially Viable Hack, Entrepreneurial Hack
+			p
+				i The purpose of this web application is to upload datasets and visualise data without identifing information contained within.
+			p How To:
+			ol(style="font-size:1.5em;")
+				li
+					b Upload
+					|  your dataset (in .xlsx format) via the form below.
+				li 
+					b Select
+					|  the columns of data you want to keep, remove or pseudonymise.
+				li 
+					b Visualise
+					|  the data de-identified to answer any specific questions you have.
+				li
+					b Download and Share
+					|  the de-identified dataset and share with others who need it!
 		div.jumbotron
 			div(id="loadingImgDiv", hidden)
 				img(src="/images/loading.gif", id="loadingImg")
 			div(id="submitFileDiv")
+				h1 Start Here!
 				h2 Submit File
 				form(action="/upload", method="post", id="identificationForm" enctype="multipart/form-data")
 					input(type="file", name="identityfile")
@@ -28,7 +46,7 @@ block content
 						th(data-toggle="tooltip" title="Select if you would like data column removed in de-identified raw data") Remove
 						th(data-toggle="tooltip" title="Select if you would like data column contents 'scrambled' to remove plain text indentifiers in raw data") Pseudonymise
 				div.alert.alert-warning(role="alert" style="text-align:center;", id="sensitiveDataFoundAlert" hidden) Any potential 'sensitive' columns have been highlighted and automatically set to be removed from raw data uploaded.
-				button.btn.btn-danger(type="button", id="canelOutputButton", style="float:left;") Cancel
+				button.btn.btn-danger(type="button", id="cancelOutputButton", style="float:left;") Cancel
 				button.btn.btn-primary(type="button", id="generateOutputButton", style="float:right;") Submit and Process
 
 
