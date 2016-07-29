@@ -1,5 +1,13 @@
 extends layout
 
+block navbar
+	include ./navbar.jade
+
+block additionalScripts
+	script(src='/javascripts/bootstrap.min.js')
+	link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
+
+
 block content
-  h1= title
-  p Welcome to #{title}
+	h1= title
+	p Welcome to #{title}
