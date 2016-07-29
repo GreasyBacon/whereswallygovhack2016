@@ -1,13 +1,21 @@
 extends layout
 
-block navbar
-	include ./navbar.jade
-
-block additionalScripts
-	script(src='/javascripts/bootstrap.min.js')
-	link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
-
-
 block content
-	h1= title
-	p Welcome to #{title}
+	div.container.margin-top
+		nav.navbar.navbar-default
+			div.contailer-fluid
+				div.navbar-header
+					a.navbar-brand Where's Wally
+		div.jumbotron
+			h1 Where's Wally
+			h3 Gov Hack 2016
+			p Put some text here to explain
+		div.jumbotron
+			h2 Submit File
+			form(action="api/upload/identifcationfile", method="post", id="identificationForm" enctype="multipart/form-data")
+				input(type="file", name="identificationFile")
+			br 
+			button.btn.btn-primary(type="button", id="uploadFileButton") Upload and Process
+
+
+
