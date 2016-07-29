@@ -7,13 +7,4 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 
-router.post('/api/upload/identifcationfile', function(req, res) {
-
-	res.json({
-        'success': true, 
-        'errMsg': "Upload completed."
-      });
-
-});
-
 module.exports = router;

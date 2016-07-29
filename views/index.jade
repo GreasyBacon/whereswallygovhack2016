@@ -7,15 +7,30 @@ block content
 				div.navbar-header
 					a.navbar-brand Where's Wally
 		div.jumbotron
-			h1 Where's Wally
+			h1 Where's Wally?
 			h3 Gov Hack 2016
 			p Put some text here to explain
 		div.jumbotron
-			h2 Submit File
-			form(action="api/upload/identifcationfile", method="post", id="identificationForm" enctype="multipart/form-data")
-				input(type="file", name="identificationFile")
-			br 
-			button.btn.btn-primary(type="button", id="uploadFileButton") Upload and Process
+			div(id="loadingImgDiv", hidden)
+				img(src="/images/loading.gif", id="loadingImg")
+			div(id="submitFileDiv")
+				h2 Submit File
+				form(action="/upload", method="post", id="identificationForm" enctype="multipart/form-data")
+					input(type="file", name="identityfile")
+				br 
+				button.btn.btn-primary(type="button", id="uploadFileButton") Upload and Process
+			div(id="columnResultsDiv", hidden)
+				table.table.table-bordered(id="columnResultsTable")
+					tr
+						th(data-toggle="tooltip" title="Name of the column in the uploaded document.") Column name
+						th(data-toggle="tooltip" title="Estimated type of the data based on first row of data.") Type
+						th(data-toggle="tooltip" title="Select how you would like this data visualised!") Visualisation Option
+						th(data-toggle="tooltip" title="Select if you would like data column removed in de-identified raw data") Remove
+						th(data-toggle="tooltip" title="Select if you would like data column contents 'scrambled' to remove plain text indentifiers in raw data") Pseudonymise
+				div.alert.alert-warning(role="alert" style="text-align:center;", id="sensitiveDataFoundAlert" hidden) Any potential 'sensitive' columns have been highlighted and automatically set to be removed from raw data uploaded.
+				button.btn.btn-danger(type="button", id="canelOutputButton", style="float:left;") Cancel
+				button.btn.btn-primary(type="button", id="generateOutputButton", style="float:right;") Submit and Process
+
 
 
 
