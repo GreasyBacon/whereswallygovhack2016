@@ -8,6 +8,7 @@ var visualiseMain = function() {
 	var loadingImgDiv = $("#loadingImgDiv");
 	var uploadProcessSection = $("#uploadProcessSection");
 	var downloadSpreadsheetButton = $("#downloadSpreadsheetButton");
+	var graphAreaSection = $("#graphAreaSection");
 
 	//clear table and return to upload form
 	cancelOutputButton.click(function(event){
@@ -15,27 +16,76 @@ var visualiseMain = function() {
 
 	});
 
-	var createCountVisualisation = function() {
+
+	var createChart = function(name) {
+
+		graphAreaSection.append('<div id="' + name +'"><h3>' + name +'</h3></div>');
+		return "#" + name;
 
 	};
 
-	var createUniqueCountVisualisation = function() {
+	//options will always have 'column', 'data', 'type' variables
+	var createCountVisualisation = function(options) {
+
+		var chartName = createChart(options['column'] + '-count');
+
+
 
 	};
 
-	var createAverageVisualisation = function() {
+	var createUniqueCountVisualisation = function(options) {
+
+		var chartName = createChart(options['column'] + '-countunique');
+
 
 	};
 
-	var createRangeVisualisation = function() {
+	var createAverageVisualisation = function(options) {
+
+		var chartName = createChart(options['column'] + '-average');
 
 	};
 
-	var createMaxVisualisation = function() {
+	var createRangeVisualisation = function(options) {
+		//data is 3 figures in array - min, max and range
+
+		var chartName = createChart(options['column'] + '-range');
+
+		var width = $(chartName).innerWidth();
+		var height = 200;
+
+		var jsonCircles = [
+   			{ "x_axis": width/4, "y_axis": 100, "radius": 25, "color" : "green"},
+   			{ "x_axis": width/2, "y_axis": 100, "radius": 50, "color" : "purple"},
+   			{ "x_axis": width-(width/4), "y_axis": 100, "radius": 75, "color" : "red"}
+   		];
+ 
+		var svgContainer = d3.select(chartName).append("svg")
+                         .attr("width", width)
+                         .attr("height", height);
+		 
+		var circles = svgContainer.selectAll("circle")
+                      .data(jsonCircles)
+                      .enter()
+                      .append("circle");
+
+		var circleAttributes = circles
+                       .attr("cx", function (d) { return d.x_axis; })
+                       .attr("cy", function (d) { return d.y_axis; })
+                       .attr("r", function (d) { return d.radius; })
+                       .style("fill", function(d) { return d.color; });
 
 	};
 
-	var createMinVisualisation = function() {
+	var createMaxVisualisation = function(options) {
+
+		var chartName = createChart(options['column'] + '-max');
+
+	};
+
+	var createMinVisualisation = function(options) {
+
+		var chartName = createChart(options['column'] + '-min');
 
 	};
 
@@ -89,6 +139,9 @@ var visualiseMain = function() {
 						' style="float:right;">Download De-Identified Dataset</button></a>'
 					);
 
+					graphVisualisationSection.append('<button class="btn btn-primary" type="button" id="restartButton"' +
+						' style="float:left;">Start with a new Dataset');
+
 					//start adding graphs
 					if (data['output']['visualisations'].length == 0) {
 						graphVisualisationSection.append('<p>No visualisations selected.</p>')
@@ -96,8 +149,28 @@ var visualiseMain = function() {
 
 						for (var i=0; i<data['output']['visualisations'].length; i++) {
 							
-							debugger;
+							var visualisationOption = data['output']['visualisations'][i];
 
+							switch(visualisationOption["type"]) {
+								case 'count':
+									createCountVisualisation(visualisationOption);
+									break
+								case 'countunique':
+									createUniqueCountVisualisation(visualisationOption);
+									break
+								case 'average':
+									createAverageVisualisation(visualisationOption);
+									break
+								case 'range':
+									createRangeVisualisation(visualisationOption);
+									break
+								case 'max':
+									createMaxVisualisation(visualisationOption);
+									break
+								case 'min':
+									createMinVisualisation(visualisationOption);
+									break
+							}
 
 						}
 

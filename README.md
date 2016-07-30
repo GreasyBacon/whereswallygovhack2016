@@ -12,6 +12,5 @@ Technology Used:
 - xlsx npm module
 - bootstrap
 - jQuery
-- nvd3
 - d3
 
