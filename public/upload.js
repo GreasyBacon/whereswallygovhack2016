@@ -1,5 +1,10 @@
 var main = function() {
 
+	//global variable to handle filename of uploaded file throughout process;
+	//ideally with a cookie or passing through functions
+	//but ain't nobody got time for that!
+	window.FILENAME = '';
+
 	window.onload = function() {
 
 		var identificationUploadForm = $("#identificationForm");
@@ -85,6 +90,8 @@ var main = function() {
 					loadingImgDiv.hide();
 					columnResultsDiv.show();
 
+					window.FILENAME = data.fileName;
+
 					for (var i=0; i<data.columns.length; i++){
 						columnResultsTable.append(tableRowAdd(data.columns[i]));
 					}
@@ -93,6 +100,8 @@ var main = function() {
 					if ($("input:checked").length) {
 						sensitiveDataFoundAlert.show();
 					}
+
+					visualiseMain();
 
 					//if any contain sensitive, should add warning message saying 'these columns should be removed or obfuscated'
 

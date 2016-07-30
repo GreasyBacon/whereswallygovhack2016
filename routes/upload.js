@@ -33,6 +33,9 @@ router.post('/', upload.single('identityfile'), function(req, res, next) {
 
 	var potentialSensitiveValues = ['dob', 'date of birth', 'name', 'address', 'age', 'birthday', 'race', 'religion'];
 
+	//TO DO, MENTOR SUGGESTION!!
+	//var potentialSensitiveCellValues = ['st', 'street', 'dr', 'drive', 'ln', 'lane'];
+
 	//returning 'true' or 'false'
 	var checkValueSensitive = function(value) {
 
