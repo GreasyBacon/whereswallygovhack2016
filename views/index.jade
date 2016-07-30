@@ -45,7 +45,8 @@ block content
 						th(data-toggle="tooltip" title="Select how you would like this data visualised!") Visualisation Option
 						th(data-toggle="tooltip" title="Select if you would like data column removed in de-identified raw data") Remove
 						th(data-toggle="tooltip" title="Select if you would like data column contents 'scrambled' to remove plain text indentifiers in raw data") Pseudonymise
-				div.alert.alert-warning(role="alert" style="text-align:center;", id="sensitiveDataFoundAlert" hidden) Any potential 'sensitive' columns have been highlighted and automatically set to be removed from raw data uploaded.
+				div.alert.alert-danger(role="alert" style="text-align:center;", id="deleteDataRecommendationAlert" hidden) Based on the names of one or more columns, some columns have been highlighted as 'high risk' and have been automatically set to be removed from raw data uploaded. They can still be used for data visualisation purposes.
+				div.alert.alert-warning(role="alert" style="text-align:center;", id="sensitiveDataFoundAlert" hidden) Based on the content of one or more columns, some columns have been highlighted as 'potential risks' and have been automatically set to be pseudonymised from raw data uploaded. They can still be used for data visualisation purposes.
 				button.btn.btn-danger(type="button", id="cancelOutputButton", style="float:left;") Cancel
 				button.btn.btn-primary(type="button", id="generateOutputButton", style="float:right;") Submit and Process
 		div.jumbotron(id="graphVisualisationSection", hidden)

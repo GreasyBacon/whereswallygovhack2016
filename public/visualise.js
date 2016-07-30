@@ -13,6 +13,7 @@ var visualiseMain = function() {
 	//clear table and return to upload form
 	cancelOutputButton.click(function(event){
 
+		//TO DO, RESET TABLE AND UPLOAD FORM
 
 	});
 

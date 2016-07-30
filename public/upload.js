@@ -13,6 +13,7 @@ var main = function() {
 		var loadingImgDiv = $("#loadingImgDiv");
 		var columnResultsDiv = $("#columnResultsDiv");
 		var columnResultsTable = $("#columnResultsTable");
+		var deleteDataRecommendationAlert = $("#deleteDataRecommendationAlert");
 		var sensitiveDataFoundAlert = $("#sensitiveDataFoundAlert");
 
 		$('[data-toggle="tooltip"]').tooltip({
@@ -49,22 +50,51 @@ var main = function() {
 			var columnType = column['type'].charAt(0).toUpperCase() + column['type'].slice(1),
 				row = "<tr>";
 
-			if (column['sensitive']) {
+			if (column['sensitivecontents']) {
 				row = "<tr class='warning'>";
+			}
+
+			if (column['sensitiveheading']) {
+				row = "<tr class='danger'>";
 			}
 
 			row = row + "<td>" + column['name'] + "</td><td>" + columnType + "</td><td>" + 
 				  selectBoxAdd(column['type']) + "</td>";
 					
-			if (column['sensitive']) {
-				row = row + "<td><input type='checkbox' checked></td>" +
-					"<td><input type='checkbox' disabled></td></tr>";
+			if (column['sensitiveheading']) {
+				row = row + "<td><input name='remove' type='checkbox' checked></td>" +
+					"<td><input name='pseudonymise' type='checkbox' disabled></td></tr>";
+			} else if (column['sensitivecontents']) {
+				row = row + "<td><input name='remove' type='checkbox' disabled></td>" +
+					"<td><input name='pseudonymise' type='checkbox' checked></td></tr>";
 			} else {
-				row = row + "<td><input type='checkbox'></td>" +
-				"<td><input type='checkbox'></td></tr>";
+				row = row + "<td><input name='remove' type='checkbox'></td>" +
+				"<td><input name='pseudonymise' type='checkbox'></td></tr>";
 			}
 
 			return row;
+
+		};
+
+		var addCheckboxChangeListeners = function() {
+
+			$("input[name='remove']").change(function() {
+				var el = $(event.currentTarget.parentElement.parentElement).find("input[name='pseudonymise']")[0]
+				if (this.checked) {
+					el.setAttribute('disabled', 'disabled')
+				} else {
+					el.removeAttribute('disabled')
+				}
+			});
+
+			$("input[name='pseudonymise']").change(function() {
+				var el = $(event.currentTarget.parentElement.parentElement).find("input[name='remove']")[0]
+				if (this.checked) {
+					el.setAttribute('disabled', 'disabled')
+				} else {
+					el.removeAttribute('disabled')
+				}
+			});			
 
 		};
 
@@ -97,9 +127,15 @@ var main = function() {
 					}
 
 					//if there are inputs checked already (because sensitive was set to true on data value)
-					if ($("input:checked").length) {
+					if ($("input[name='remove']:checked").length) {
+						deleteDataRecommendationAlert.show();
+					}
+
+					if ($("input[name='pseudonymise']:checked").length) {
 						sensitiveDataFoundAlert.show();
 					}
+
+					addCheckboxChangeListeners();
 
 					visualiseMain();
 

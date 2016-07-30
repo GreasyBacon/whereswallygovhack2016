@@ -31,10 +31,12 @@ router.post('/', upload.single('identityfile'), function(req, res, next) {
 	var columnHeadings = worksheet[0];
 	var columns = [];
 
-	var potentialSensitiveValues = ['dob', 'date of birth', 'name', 'address', 'age', 'birthday', 'race', 'religion'];
+	var potentialSensitiveValues = ['dob', 'date of birth', 'name', 'address', 'age', 
+									'birthday', 'race', 'religion', 'first_name', 'last_name',
+									'email', 'e-mail', 'phone', 'mobile', 'first name', 'last name'];
 
-	//TO DO, MENTOR SUGGESTION!!
-	//var potentialSensitiveCellValues = ['st', 'street', 'dr', 'drive', 'ln', 'lane'];
+	var potentialSensitiveCellValues = ['street', 'drive', 'lane', '@hotmail.com', '@gmail.com', '.com', 
+										'avenue', '.com.au'];
 
 	//returning 'true' or 'false'
 	var checkValueSensitive = function(value) {
@@ -47,6 +49,24 @@ router.post('/', upload.single('identityfile'), function(req, res, next) {
 
 	};
 
+	//returning 'true' or 'false'
+	var checkContentSensitive = function(value) {
+
+
+		for (var i=0; i<3; i++) {
+			var row = worksheet[i];
+			var content = row[value];
+
+			for (var p=0; p<potentialSensitiveCellValues.length; p++) {
+				if (content.toLowerCase().indexOf(potentialSensitiveCellValues[p]) != -1) {
+					return true;
+				}
+			}
+		}
+		return false;
+
+	};
+
 	//returning 'string', 'number', 'date', ANY OTHERS?!?
 	var checkValueType = function(value) {
 
@@ -54,6 +74,12 @@ router.post('/', upload.single('identityfile'), function(req, res, next) {
 
 		if (!isNaN(numberCheck)) {
 			return 'number';
+		}
+
+		var currencyCheck = Number(value.replace("$", ""))
+
+		if (!isNaN(currencyCheck)) {
+			return 'currency';
 		}
 
 		var dateCheck = new Date(value);
@@ -71,7 +97,8 @@ router.post('/', upload.single('identityfile'), function(req, res, next) {
 		var config = {};
 		config['name'] = heading;
 		config['type'] = checkValueType(columnHeadings[heading]);
-		config['sensitive'] = checkValueSensitive(heading);
+		config['sensitiveheading'] = checkValueSensitive(heading);
+		config['sensitivecontents'] = checkContentSensitive(heading);
 		columns.push(config);
 	}
 

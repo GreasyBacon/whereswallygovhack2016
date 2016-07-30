@@ -74,7 +74,7 @@ router.post('/', function(req, res) {
   		var count = 0;
 
   		for (var rowIndex in worksheet) {
-  			var value = Number(worksheet[rowIndex][column.column]);
+  			var value = Number(worksheet[rowIndex][column.column].replace("$", ""));
   			if (!isNaN(value)){
   				values += value;
   				count += 1;
@@ -94,7 +94,7 @@ router.post('/', function(req, res) {
   			range;
   		
   		for (var rowIndex in worksheet) {
-  			var value = Number(worksheet[rowIndex][column.column]);
+  			var value = Number(worksheet[rowIndex][column.column].replace("$", ""));
   			if (!min < value) {
   				min = value;
   			}
@@ -114,7 +114,7 @@ router.post('/', function(req, res) {
   		var max = 0;
 
   		for (var rowIndex in worksheet) {
-  			var value = Number(worksheet[rowIndex][column.column]);
+  			var value = Number(worksheet[rowIndex][column.column].replace("$", ""));
   			if (value > max) {
   				max = value;
   			}
@@ -129,7 +129,7 @@ router.post('/', function(req, res) {
   		var min;
 
   		for (var rowIndex in worksheet) {
-  			var value = Number(worksheet[rowIndex][column.column]);
+  			var value = Number(worksheet[rowIndex][column.column].replace("$", ""));
   			if (!min < value) {
   				min = value;
   			}
