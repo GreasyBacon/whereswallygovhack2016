@@ -10,9 +10,13 @@ block content
 			a(href="https://2016.hackerspace.govhack.org/content/de-identify-your-data-inc")
 				img(src="/images/DYDincLogo.png", style="width:150px; height: 80px; float: right;")
 			h1 De-Identify Your Data
-			h3 Gov Hack 2016 - Hiding Wally, Commercially Viable Hack, Entrepreneurial Hack
+			a(href="https://www.govhack.org/")
+				h3 Gov Hack 2016
 			p
-				i The purpose of this web application is to upload datasets and visualise data without identifing information contained within.
+				i The purpose of this web application is to allow you to easily upload datasets, select data to 
+				a(href="https://en.wikipedia.org/wiki/De-identification") 
+					i de-identify
+				i , visualise specific aspects of the data, and download a new de-identified data file.
 			p How To:
 			ol(style="font-size:1.5em;")
 				li
@@ -20,23 +24,29 @@ block content
 					|  your dataset (in .xlsx format) via the form below.
 				li 
 					b Select
-					|  the columns of data you want to keep, remove or pseudonymise.
+					|  the columns of data you want to keep, remove or 
+					a(href="https://en.wikipedia.org/wiki/Pseudonymization") pseudonymise
+					| .
 				li 
 					b Visualise
 					|  the data de-identified to answer any specific questions you have.
 				li
-					b Download and Share
-					|  the de-identified dataset and share with others who need it!
+					b Download
+					|  the de-identified dataset and 
+					b share 
+					| with others who need it!
 		div.jumbotron(id="uploadProcessSection")
 			div(id="loadingImgDiv", hidden)
 				img(src="/images/loading.gif", id="loadingImg")
 			div(id="submitFileDiv")
 				h1 Start Here!
-				h2 Submit File
+				p For help in converting CSV/TXT files to XLSX, click&nbsp;
+					a(href="https://support.office.com/en-us/article/Import-or-export-text-txt-or-csv-files-5250ac4c-663c-47ce-937b-339e391393ba") here
+					| .
 				form(action="/upload", method="post", id="identificationForm" enctype="multipart/form-data")
 					input(type="file", name="identityfile")
+				button.btn.btn-primary(type="button", id="uploadFileButton", style="float:right;") Upload and Process
 				br 
-				button.btn.btn-primary(type="button", id="uploadFileButton") Upload and Process
 			div(id="columnResultsDiv", hidden)
 				table.table.table-bordered(id="columnResultsTable")
 					tr.header-row

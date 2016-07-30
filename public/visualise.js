@@ -13,15 +13,17 @@ var visualiseMain = function() {
 	//clear table and return to upload form
 	cancelOutputButton.click(function(event){
 
-		//TO DO, RESET TABLE AND UPLOAD FORM
+		//when you don't want to handle hiding and showing
+		//stuff and just want to reset
+		location.reload();
 
 	});
 
 
 	var createChart = function(name) {
 
-		graphAreaSection.append('<div style="margin-top:4em" id="' + name +'"><h3>' + name +'</h3></div>');
-		return "#" + name;
+		graphAreaSection.append('<div style="margin-top:4em" id="' + name.replace(" ", "") +'"><h3>' + name +'</h3></div>');
+		return "#" + name.replace(" ", "");
 
 	};
 
@@ -206,9 +208,13 @@ var visualiseMain = function() {
 					graphVisualisationSection.append('<button class="btn btn-primary" type="button" id="restartButton"' +
 						' style="float:left;">Start with a new Dataset</button></div>');
 
+					$("#restartButton").click(function(event){
+						location.reload();
+					});
+
 					//start adding graphs
 					if (data['output']['visualisations'].length == 0) {
-						graphVisualisationSection.append('<p>No visualisations selected.</p>')
+						graphAreaSection.append('<p>No visualisations selected.</p>')
 					} else {
 
 						for (var i=0; i<data['output']['visualisations'].length; i++) {

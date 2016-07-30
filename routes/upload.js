@@ -33,7 +33,8 @@ router.post('/', upload.single('identityfile'), function(req, res, next) {
 
 	var potentialSensitiveValues = ['dob', 'date of birth', 'name', 'address', 'age', 
 									'birthday', 'race', 'religion', 'first_name', 'last_name',
-									'email', 'e-mail', 'phone', 'mobile', 'first name', 'last name'];
+									'email', 'e-mail', 'phone', 'mobile', 'first name', 'last name',
+									'surname', 'given name', 'given names'];
 
 	var potentialSensitiveCellValues = ['street', 'drive', 'lane', '@hotmail.com', '@gmail.com', '.com', 
 										'avenue', '.com.au'];
