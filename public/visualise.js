@@ -54,7 +54,19 @@ var visualiseMain = function() {
 
 		var chartName = createChart(options['column'] + '-countunique');
 		$(chartName).height(400);
-		$(chartName).append('<h4>' + options['data'] + '</h4>');
+		
+		var data = [
+			{"x": 1, "name": "Unique Count", "value": options['data']}
+		];
+
+		var visualisation = d3plus.viz()
+			.container(chartName)
+			.data(data)
+			.type("bar")
+			.id("name")
+			.x("x")
+			.y("value")
+			.draw()
 		
 	};
 
@@ -62,7 +74,19 @@ var visualiseMain = function() {
 
 		var chartName = createChart(options['column'] + '-average');
 		$(chartName).height(400);
-		$(chartName).append('<h4>' + options['data'] + '</h4>');
+		
+		var data = [
+			{"x": 1, "name": "Average", "value": options['data']}
+		];
+
+		var visualisation = d3plus.viz()
+			.container(chartName)
+			.data(data)
+			.type("bar")
+			.id("name")
+			.x("x")
+			.y("value")
+			.draw()
 
 	};
 
@@ -94,7 +118,19 @@ var visualiseMain = function() {
 
 		var chartName = createChart(options['column'] + '-max');
 		$(chartName).height(400);
-		$(chartName).append('<h4>' + options['data'] + '</h4>');
+		
+		var data = [
+			{"x":1, "name": "Maximum", "value": options['data']}
+		]
+
+		var visualisation = d3plus.viz()
+			.container(chartName)
+			.data(data)
+			.type("bar")
+			.id("name")
+			.x("x")
+			.y("value")
+			.draw()
 
 	};
 
@@ -102,8 +138,19 @@ var visualiseMain = function() {
 
 		var chartName = createChart(options['column'] + '-min');
 		$(chartName).height(400);
-		$(chartName).append('<h4>' + options['data'] + '</h4>');
+		
+		var data = [
+			{"x":1, "name": "Minimum", "value": options['data']}
+		]
 
+		var visualisation = d3plus.viz()
+			.container(chartName)
+			.data(data)
+			.type("bar")
+			.id("name")
+			.x("x")
+			.y("value")
+			.draw()
 	};
 
 
