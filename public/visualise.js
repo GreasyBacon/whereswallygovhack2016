@@ -206,7 +206,7 @@ var visualiseMain = function() {
 					);
 
 					graphVisualisationSection.append('<button class="btn btn-primary" type="button" id="restartButton"' +
-						' style="float:left;">Start with a new Dataset</button></div>');
+						' style="float:left;">Start with a new Dataset</button></div><br>');
 
 					$("#restartButton").click(function(event){
 						location.reload();
