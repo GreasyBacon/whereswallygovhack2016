@@ -5,7 +5,7 @@ var XLSX = require('xlsx');
 router.post('/', function(req, res) {
   
 
-  	var filePath = 'uploads/' + req.body.filename;
+  	var filePath = 'public/uploads/' + req.body.filename;
   	var columns = req.body.columns;
   	var output = {
   		'visualisations': []
@@ -189,7 +189,7 @@ router.post('/', function(req, res) {
 
 		wb.SheetNames.push(ws_name);
 		wb.Sheets[ws_name] = ws;
-		XLSX.writeFile(wb, 'uploads/' + filename);
+		XLSX.writeFile(wb, 'public/uploads/' + filename);
 		/*https://gist.github.com/SheetJSDev/88a3ca3533adf389d13c*/
   	}
 
@@ -255,7 +255,7 @@ router.post('/', function(req, res) {
 			if (columnsToKeep.indexOf(column) == -1 && columnsToPseudonymise.indexOf(column) == -1) {
 				delete val;
 			} else if (columnsToPseudonymise.indexOf(column) !== -1) {
-				val = "SHOULD BE HASHED";
+				val = require('crypto').createHash('md5').update(val).digest("hex");
 				cellValues.push(val);
 			} else {
 				cellValues.push(val);
@@ -271,7 +271,7 @@ router.post('/', function(req, res) {
 	res.json({
         'success': true,
         'output': output,
-        'file': 'de-identified' + req.body.filename,
+        'file': 'de-identified-' + req.body.filename,
         'statusMsg': "Processing completed."
      });
 
