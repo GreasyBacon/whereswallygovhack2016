@@ -19,7 +19,7 @@ var visualiseMain = function() {
 
 	var createChart = function(name) {
 
-		graphAreaSection.append('<div id="' + name +'"><h3>' + name +'</h3></div>');
+		graphAreaSection.append('<div style="margin-top:4em" id="' + name +'"><h3>' + name +'</h3></div>');
 		return "#" + name;
 
 	};
@@ -28,21 +28,40 @@ var visualiseMain = function() {
 	var createCountVisualisation = function(options) {
 
 		var chartName = createChart(options['column'] + '-count');
+		var width = $(chartName).innerWidth();
+		$(chartName).height(400);
+		var data = [];
 
+		for (var value in options['data']) {
+			data.push({
+				"value": options['data'][value],
+				"name": value,
+			});
+		}
 
+		var visualisation = d3plus.viz()
+			.container(chartName)
+			.data(data)
+			.type("tree_map")
+			.id("name")
+			.size("value")
+			.draw()
 
 	};
 
 	var createUniqueCountVisualisation = function(options) {
 
 		var chartName = createChart(options['column'] + '-countunique');
-
-
+		$(chartName).height(400);
+		$(chartName).append('<h4>' + options['data'] + '</h4>');
+		
 	};
 
 	var createAverageVisualisation = function(options) {
 
 		var chartName = createChart(options['column'] + '-average');
+		$(chartName).height(400);
+		$(chartName).append('<h4>' + options['data'] + '</h4>');
 
 	};
 
@@ -52,40 +71,37 @@ var visualiseMain = function() {
 		var chartName = createChart(options['column'] + '-range');
 
 		var width = $(chartName).innerWidth();
-		var height = 200;
+		$(chartName).height(400);
 
-		var jsonCircles = [
-   			{ "x_axis": width/4, "y_axis": 100, "radius": 25, "color" : "green"},
-   			{ "x_axis": width/2, "y_axis": 100, "radius": 50, "color" : "purple"},
-   			{ "x_axis": width-(width/4), "y_axis": 100, "radius": 75, "color" : "red"}
-   		];
- 
-		var svgContainer = d3.select(chartName).append("svg")
-                         .attr("width", width)
-                         .attr("height", height);
-		 
-		var circles = svgContainer.selectAll("circle")
-                      .data(jsonCircles)
-                      .enter()
-                      .append("circle");
+		var data = [
+			{'set': options['column'], 'name': 'min', 'value': options['data'][0]},
+			{'set': options['column'], 'name': 'average', 'value': options['data'][2]},
+			{'set': options['column'], 'name': 'max', 'value': options['data'][1]},
+		];
 
-		var circleAttributes = circles
-                       .attr("cx", function (d) { return d.x_axis; })
-                       .attr("cy", function (d) { return d.y_axis; })
-                       .attr("r", function (d) { return d.radius; })
-                       .style("fill", function(d) { return d.color; });
-
+		var visualisation = d3plus.viz()
+			.container(chartName)
+			.data(data)
+			.type('box')
+			.id('name')
+			.x('set')
+			.y('value')
+			.draw()
 	};
 
 	var createMaxVisualisation = function(options) {
 
 		var chartName = createChart(options['column'] + '-max');
+		$(chartName).height(400);
+		$(chartName).append('<h4>' + options['data'] + '</h4>');
 
 	};
 
 	var createMinVisualisation = function(options) {
 
 		var chartName = createChart(options['column'] + '-min');
+		$(chartName).height(400);
+		$(chartName).append('<h4>' + options['data'] + '</h4>');
 
 	};
 
@@ -134,13 +150,13 @@ var visualiseMain = function() {
 					uploadProcessSection.hide();
 					graphVisualisationSection.show();
 
-					graphVisualisationSection.append('<a href="uploads/' + window.FILENAME + 
+					graphVisualisationSection.append('<div style="margin-top:4em"><a href="uploads/' + window.FILENAME + 
 						'" download="' + window.FILENAME + '"><button class="btn btn-primary"' +
 						' style="float:right;">Download De-Identified Dataset</button></a>'
 					);
 
 					graphVisualisationSection.append('<button class="btn btn-primary" type="button" id="restartButton"' +
-						' style="float:left;">Start with a new Dataset');
+						' style="float:left;">Start with a new Dataset</button></div>');
 
 					//start adding graphs
 					if (data['output']['visualisations'].length == 0) {
