@@ -34,7 +34,7 @@ var main = function() {
 					"</select>"
 			}
 
-			if (type == 'string' || type == 'date') {
+			if (type == 'string' || type == 'date' || type == 'currency') {
 				return "<select>" +
 					"<option value='none'>(none)</option>" +
 					"<option value='count'>Count</option>" +
